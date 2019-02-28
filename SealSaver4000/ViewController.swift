@@ -12,6 +12,7 @@ import CoreAudioKit
 import Foundation
 import AVKit
 
+
 class ViewController: UIViewController, AVAudioRecorderDelegate , AVAudioPlayerDelegate, UITextFieldDelegate{
     
     
@@ -181,12 +182,19 @@ class ViewController: UIViewController, AVAudioRecorderDelegate , AVAudioPlayerD
         print(player.debugDescription)
     }
     
-    @IBAction func setFreq(_ sender: AnyObject) {
-        FreqTestBox.becomeFirstResponder()
- //       let frequecy: Int? = Int(readLine()!)
+    @IBAction func setFrequency(_ sender: AnyObject) {
+        FreqTestBox.resignFirstResponder()
+        processInputOnDone()
     }
-
+    //Save the number and set it to the current desired frequency
+    func processInputOnDone() {
+        if let text = FreqTestBox.text, !text.isEmpty {
+            frequecy = Int(FreqTestBox.text!)!
+        }
+        print(frequecy)
+    }
 }
+
      /* Taken from https://gist.github.com/jplazcano87/8b5d3bc89c3578e45c3e */
 extension UITextField{
     

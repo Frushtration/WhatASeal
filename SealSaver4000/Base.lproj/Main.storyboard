@@ -84,14 +84,14 @@
                                 <frame key="frameInset" minX="87" minY="569" width="176" height="65"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JUb-Ou-6kD">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="JUb-Ou-6kD">
                                         <frame key="frameInset" minX="57" minY="46" width="97" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad" keyboardAppearance="light" returnKeyType="done"/>
                                         <connections>
-                                            <action selector="setFreq:" destination="BYZ-38-t0r" eventType="editingDidBegin" id="hzb-Vt-HX4"/>
+                                            <action selector="setFrequency:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="QRk-nv-DcL"/>
                                         </connections>
                                     </textField>
                                 </subviews>
