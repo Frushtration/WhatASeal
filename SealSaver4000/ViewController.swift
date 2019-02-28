@@ -12,27 +12,39 @@ import CoreAudioKit
 import Foundation
 import AVKit
 
-class ViewController: UIViewController, AVAudioRecorderDelegate , AVAudioPlayerDelegate {
+class ViewController: UIViewController, AVAudioRecorderDelegate , AVAudioPlayerDelegate, UITextFieldDelegate{
     
+    
+    //Settings for all the audio input
     @IBOutlet weak var btnAudioRecord: UIButton!
     var recordingSession : AVAudioSession!
     var audioRecorder    :AVAudioRecorder!
     var settings         = [String : Int]()
     var audioPlayer : AVAudioPlayer!
-
     
-    var startTime = TimeInterval()
     
-    var timer1:Timer = Timer()
+    //Set up the keypad for the frequency
+    @IBOutlet weak var FreqTestBox: UITextField!
+    //Set the var for the freq
+    var frequecy = 0
     
+    /*
+    //Set up the button to show the current freq
     @IBOutlet weak var frequency: UILabel!
+     */
     
+    //Set up for the timers
+    var startTime = TimeInterval()
+    var timer1:Timer = Timer()
     @IBOutlet weak var timer1Label: UILabel!
-    
     @IBOutlet weak var timer2Label: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        FreqTestBox.keyboardType = UIKeyboardType.numberPad
+        FreqTestBox.delegate = self
+        FreqTestBox.addDoneButtonToKeyboard(myAction:  #selector(self.FreqTestBox.resignFirstResponder))
+        
         // Do any additional setup after loading the view, typically from a nib.
         recordingSession = AVAudioSession.sharedInstance()
         do {
@@ -45,6 +57,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate , AVAudioPlayerD
                     } else {
                         print("Dont Allow")
                     }
+                    
                 }
             }
         } catch {
@@ -64,10 +77,6 @@ class ViewController: UIViewController, AVAudioRecorderDelegate , AVAudioPlayerD
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-
-    @IBAction func selectFreq(_ sender: AnyObject) {
-    
     }
 
     @IBAction func startStopTimer1(_ sender: AnyObject) {
@@ -141,7 +150,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate , AVAudioPlayerD
             print("Somthing Wrong.")
         }
     }
-        
+
     @IBAction func doPlay(_ sender: AnyObject) {
         if !audioRecorder.isRecording {
             self.audioPlayer = try! AVAudioPlayer(contentsOf: audioRecorder.url)
@@ -171,8 +180,32 @@ class ViewController: UIViewController, AVAudioRecorderDelegate , AVAudioPlayerD
     internal func audioPlayerBeginInterruption(_ player: AVAudioPlayer){
         print(player.debugDescription)
     }
+    
+    @IBAction func setFreq(_ sender: AnyObject) {
+        FreqTestBox.becomeFirstResponder()
+ //       let frequecy: Int? = Int(readLine()!)
+    }
 
+}
+     /* Taken from https://gist.github.com/jplazcano87/8b5d3bc89c3578e45c3e */
+extension UITextField{
+    
+    func addDoneButtonToKeyboard(myAction:Selector?){
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 300, height: 40))
+        doneToolbar.barStyle = UIBarStyle.default
         
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action: myAction)
+        
+        var items = [UIBarButtonItem]()
+        items.append(flexSpace)
+        items.append(done)
+        
+        doneToolbar.items = items
+        doneToolbar.sizeToFit()
+        
+        self.inputAccessoryView = doneToolbar
+    }
 }
 
 
