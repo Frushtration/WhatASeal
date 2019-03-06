@@ -1,0 +1,20 @@
+PODS:
+  - Alamofire (4.8.1)
+  - EZAudio/Core (1.1.5)
+
+DEPENDENCIES:
+  - Alamofire (~> 4.4)
+  - EZAudio/Core (~> 1.1.4)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - EZAudio
+
+SPEC CHECKSUMS:
+  Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
+  EZAudio: 3b1cb4b6d7ebca68f0c2478576d75940aad4aa99
+
+PODFILE CHECKSUM: 0785879c25c3d943bcbc82ecb1ebd3e2db96da12
+
+COCOAPODS: 1.7.0.beta.1

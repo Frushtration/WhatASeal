@@ -7,14 +7,34 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2568760D974B3D544E18A995 /* Pods_SealSaver4000.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48565B0C680F9DFD92224635 /* Pods_SealSaver4000.framework */; };
 		870BF23D21F3C722007AC0D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870BF23C21F3C722007AC0D1 /* AppDelegate.swift */; };
 		870BF23F21F3C722007AC0D1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870BF23E21F3C722007AC0D1 /* ViewController.swift */; };
 		870BF24221F3C722007AC0D1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 870BF24021F3C722007AC0D1 /* Main.storyboard */; };
 		870BF24421F3C722007AC0D1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 870BF24321F3C722007AC0D1 /* Assets.xcassets */; };
 		870BF24721F3C722007AC0D1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 870BF24521F3C722007AC0D1 /* LaunchScreen.storyboard */; };
+		87997221223053BC00057EF9 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 87997220223053BC00057EF9 /* Podfile */; };
+		8799722322306F0500057EF9 /* AudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8799722222306F0500057EF9 /* AudioKit.framework */; };
+		8799722422306F0500057EF9 /* AudioKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8799722222306F0500057EF9 /* AudioKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		87ECDDAD222DA521004C12C8 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				8799722422306F0500057EF9 /* AudioKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		187D3FE29BE6A5866AE62DBB /* Pods-SealSaver4000.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SealSaver4000.debug.xcconfig"; path = "Target Support Files/Pods-SealSaver4000/Pods-SealSaver4000.debug.xcconfig"; sourceTree = "<group>"; };
+		48565B0C680F9DFD92224635 /* Pods_SealSaver4000.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SealSaver4000.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		870BF23921F3C722007AC0D1 /* SealSaver4000.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SealSaver4000.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		870BF23C21F3C722007AC0D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		870BF23E21F3C722007AC0D1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -22,6 +42,9 @@
 		870BF24321F3C722007AC0D1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		870BF24621F3C722007AC0D1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		870BF24821F3C722007AC0D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		87997220223053BC00057EF9 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		8799722222306F0500057EF9 /* AudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AudioKit.framework; sourceTree = "<group>"; };
+		B91040BF51ECFAD88FB4D96D /* Pods-SealSaver4000.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SealSaver4000.release.xcconfig"; path = "Target Support Files/Pods-SealSaver4000/Pods-SealSaver4000.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +52,31 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8799722322306F0500057EF9 /* AudioKit.framework in Frameworks */,
+				2568760D974B3D544E18A995 /* Pods_SealSaver4000.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		67CC1EB041E422D4E58EF98D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				48565B0C680F9DFD92224635 /* Pods_SealSaver4000.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		870BF23021F3C722007AC0D1 = {
 			isa = PBXGroup;
 			children = (
+				8799722222306F0500057EF9 /* AudioKit.framework */,
+				87997220223053BC00057EF9 /* Podfile */,
 				870BF23B21F3C722007AC0D1 /* SealSaver4000 */,
 				870BF23A21F3C722007AC0D1 /* Products */,
+				BC7588E9F80C3B7C3D3DE2A8 /* Pods */,
+				67CC1EB041E422D4E58EF98D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -64,6 +101,15 @@
 			path = SealSaver4000;
 			sourceTree = "<group>";
 		};
+		BC7588E9F80C3B7C3D3DE2A8 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				187D3FE29BE6A5866AE62DBB /* Pods-SealSaver4000.debug.xcconfig */,
+				B91040BF51ECFAD88FB4D96D /* Pods-SealSaver4000.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -71,9 +117,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 870BF24B21F3C722007AC0D1 /* Build configuration list for PBXNativeTarget "SealSaver4000" */;
 			buildPhases = (
+				FDA7542DF7B1217A8B3E5933 /* [CP] Check Pods Manifest.lock */,
 				870BF23521F3C722007AC0D1 /* Sources */,
 				870BF23621F3C722007AC0D1 /* Frameworks */,
 				870BF23721F3C722007AC0D1 /* Resources */,
+				87ECDDAD222DA521004C12C8 /* Embed Frameworks */,
+				8D5455BCE1C883701985C758 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -125,11 +174,53 @@
 			files = (
 				870BF24721F3C722007AC0D1 /* LaunchScreen.storyboard in Resources */,
 				870BF24421F3C722007AC0D1 /* Assets.xcassets in Resources */,
+				87997221223053BC00057EF9 /* Podfile in Resources */,
 				870BF24221F3C722007AC0D1 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8D5455BCE1C883701985C758 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SealSaver4000/Pods-SealSaver4000-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/EZAudio/EZAudio.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EZAudio.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SealSaver4000/Pods-SealSaver4000-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FDA7542DF7B1217A8B3E5933 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SealSaver4000-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		870BF23521F3C722007AC0D1 /* Sources */ = {
@@ -253,8 +344,13 @@
 		};
 		870BF24C21F3C722007AC0D1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 187D3FE29BE6A5866AE62DBB /* Pods-SealSaver4000.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = SealSaver4000/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Frush.SealSaver4000;
@@ -265,8 +361,13 @@
 		};
 		870BF24D21F3C722007AC0D1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B91040BF51ECFAD88FB4D96D /* Pods-SealSaver4000.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = SealSaver4000/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Frush.SealSaver4000;

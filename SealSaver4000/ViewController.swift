@@ -11,10 +11,12 @@ import CoreAudio
 import CoreAudioKit
 import Foundation
 import AVKit
+import AudioKit
 
 
 class ViewController: UIViewController, AVAudioRecorderDelegate , AVAudioPlayerDelegate, UITextFieldDelegate{
     
+
     
     //Settings for all the audio input
     @IBOutlet weak var btnAudioRecord: UIButton!
@@ -22,9 +24,38 @@ class ViewController: UIViewController, AVAudioRecorderDelegate , AVAudioPlayerD
     var audioRecorder    :AVAudioRecorder!
     var settings         = [String : Int]()
     var audioPlayer : AVAudioPlayer!
+
+    var recorder: AKNodeRecorder?
+    var player: AKAudioPlayer?
+    var tape: AKAudioFile?
+    var micBooster: AKBooster?
+    var moogLadder: AKMoogLadder?
     
+    var state = State.readyToRecord
     
-    //Set up the keypad for the frequency
+    @IBOutlet weak var infoLabel: UILabel!
+    
+    @IBOutlet var audioInputPlot: EZAudioPlot!
+    /*
+    @IBOutlet weak var resetButton: UIButton!
+    @IBOutlet weak var freqLabel: UILabel!
+    @IBOutlet weak var resonLabel: UILabel!
+    @IBOutlet weak var mainButton: UIButton!
+    @IBOutlet weak var loopButton: UIButton!
+    @IBOutlet weak var freqSlider: UISlider!
+    @IBOutlet weak var moogLadderTitle: UILabel!
+    @IBOutlet weak var resonSlider: UISlider!
+    */
+    
+    enum State {
+        case readyToRecord
+        case recording
+        //case readyToPlay
+        //case playing
+    }
+
+    
+       //Set up the keypad for the frequency
     @IBOutlet weak var FreqTestBox: UITextField!
     //Set the var for the freq
     var frequecy = 0
@@ -40,40 +71,109 @@ class ViewController: UIViewController, AVAudioRecorderDelegate , AVAudioPlayerD
     @IBOutlet weak var timer1Label: UILabel!
     @IBOutlet weak var timer2Label: UILabel!
     
+    /*
+    //Code to set up the plot
+    func setupPlot() {
+        let plot = AKNodeOutputPlot(mic, frame: audioInputPlot.bounds)
+        plot.plotType = .Rolling
+        plot.shouldFill = true
+        plot.shouldMirror = true
+        plot.color = UIColor.blueColor()
+        audioInputPlot.addSubview(plot)
+    }
+    */
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         FreqTestBox.keyboardType = UIKeyboardType.numberPad
         FreqTestBox.delegate = self
         FreqTestBox.addDoneButtonToKeyboard(myAction:  #selector(self.FreqTestBox.resignFirstResponder))
         
-        // Do any additional setup after loading the view, typically from a nib.
-        recordingSession = AVAudioSession.sharedInstance()
+        // Clean tempFiles !
+        AKAudioFile.cleanTempDirectory()
+        
+        // Session settings
+        AKSettings.bufferLength = .medium
+        
         do {
-            try recordingSession.setCategory(AVAudioSessionCategoryPlayAndRecord)
-            try recordingSession.setActive(true)
-            recordingSession.requestRecordPermission() { [unowned self] allowed in
-                DispatchQueue.main.async {
-                    if allowed {
-                        print("Allow")
-                    } else {
-                        print("Dont Allow")
-                    }
-                    
+            try AKSettings.setSessionCategory(.PlayAndRecord, withOptions: .defaultToSpeaker)
+        } catch { print("Errored setting category.") }
+        
+        // Patching
+        let mic = AKMicrophone()
+        let micMixer = AKMixer(mic)
+        micBooster = AKBooster(micMixer)
+        
+        // Will set the level of microphone monitoring
+        micBooster!.gain = 0
+        recorder = try? AKNodeRecorder(node: micMixer)
+        tape = recorder?.audioFile
+        player = tape?.player
+        player?.looping = false
+        player?.completionHandler = playingEnded
+        
+        moogLadder = AKMoogLadder(player!)
+        
+   
+        let mainMixer = AKMixer(moogLadder!, micBooster!)
+        
+        AudioKit.output = mainMixer
+        AudioKit.start()
+        
+       // setupUIForRecording()
+    }
+/*
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        AudioKit.output = silence
+        do {
+            try AudioKit.start()
+        } catch {
+            AKLog("AudioKit did not start!")
+        }
+        setupPlot()
+        Timer.scheduledTimer(timeInterval: 0.1,
+                             target: self,
+                             selector: #selector(ViewController.updateUI),
+                             userInfo: nil,
+                             repeats: true)
+    }
+    
+    @objc func updateUI() {
+        if tracker.amplitude > 0.1 {
+            frequencyLabel.text = String(format: "%0.1f", tracker.frequency)
+            
+            var frequency = Float(tracker.frequency)
+            while frequency > Float(noteFrequencies[noteFrequencies.count - 1]) {
+                frequency /= 2.0
+            }
+            while frequency < Float(noteFrequencies[0]) {
+                frequency *= 2.0
+            }
+            
+            var minDistance: Float = 10_000.0
+            var index = 0
+            
+            for i in 0..<noteFrequencies.count {
+                let distance = fabsf(Float(noteFrequencies[i]) - frequency)
+                if distance < minDistance {
+                    index = i
+                    minDistance = distance
                 }
             }
-        } catch {
-            print("failed to record!")
+            let octave = Int(log2f(Float(tracker.frequency) / frequency))
+            noteNameWithSharpsLabel.text = "\(noteNamesWithSharps[index])\(octave)"
+            noteNameWithFlatsLabel.text = "\(noteNamesWithFlats[index])\(octave)"
         }
-            
-            // Audio Settings
-            
-        settings = [
-            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-            AVSampleRateKey: 12000,
-            AVNumberOfChannelsKey: 1,
-            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
-        ]
+        amplitudeLabel.text = String(format: "%0.2f", tracker.amplitude)
     }
+    */
+    func playingEnded() {
+        DispatchQueue.main.async {
+        }
+    }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -126,49 +226,39 @@ class ViewController: UIViewController, AVAudioRecorderDelegate , AVAudioPlayerD
         print(soundURL)
         return soundURL as NSURL?
     }
-    func startRecording() {
-        let audioSession = AVAudioSession.sharedInstance()
-        do {
-            audioRecorder = try AVAudioRecorder(url: self.directoryURL()! as URL,
-                                                    settings: settings)
-            audioRecorder.delegate = self
-            audioRecorder.prepareToRecord()
-        } catch {
-            finishRecording(success: false)
-        }
-        do {
-            try audioSession.setActive(true)
-            audioRecorder.record()
-        } catch {
-        }
-    }
-    func finishRecording(success: Bool) {
-        audioRecorder.stop()
-        if success {
-            print(success)
-        } else {
-            audioRecorder = nil
-            print("Somthing Wrong.")
-        }
-    }
 
     @IBAction func doPlay(_ sender: AnyObject) {
-        if !audioRecorder.isRecording {
-            self.audioPlayer = try! AVAudioPlayer(contentsOf: audioRecorder.url)
-            self.audioPlayer.prepareToPlay()
-            self.audioPlayer.delegate = self
-            self.audioPlayer.play()
-        }
+        player!.play()
+    
     }
+ 
     @IBAction func click4Rec(_ sender: AnyObject) {
-        if audioRecorder == nil {
-            self.btnAudioRecord.setTitle("Stop", for: UIControlState.normal)
-            //self.btnAudioRecord.backgroundColor = UIColor(red: 119.0/255.0, green: 119.0/255.0, blue: 119.0/255.0, alpha: 1.0)
-            self.startRecording()
-        } else {
-            self.btnAudioRecord.setTitle("Record", for: UIControlState.normal)
-            self.btnAudioRecord.backgroundColor = UIColor(red: 221.0/255.0, green: 27.0/255.0, blue: 50.0/255.0, alpha: 1.0)
-            self.finishRecording(success: true)
+        switch state {
+        case .readyToRecord :
+            //infoLabel.text = "Recording"
+            //mainButton.setTitle("Stop", for: .normal)
+            state = .recording
+            // microphone will be monitored while recording
+            // only if headphones are plugged
+            if AKSettings.headPhonesPlugged {
+                micBooster!.gain = 1
+            }
+            do {
+                try recorder?.record()
+            } catch { print("Errored recording.") }
+            
+        case .recording :
+            // Microphone monitoring is muted
+            micBooster!.gain = 0
+            do {
+                try player?.reloadFile()
+            } catch { print("Errored reloading.") }
+            
+            let recordedDuration = player != nil ? player?.audioFile.duration  : 0
+            if recordedDuration! > 0.0 {
+                recorder?.stop()
+               // setupUIForPlaying ()
+            }
         }
 
     }

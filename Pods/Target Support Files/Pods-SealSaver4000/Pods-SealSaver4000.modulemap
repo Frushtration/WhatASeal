@@ -1,0 +1,6 @@
+framework module Pods_SealSaver4000 {
+  umbrella header "Pods-SealSaver4000-umbrella.h"
+
+  export *
+  module * { export * }
+}

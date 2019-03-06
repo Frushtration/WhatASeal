@@ -96,12 +96,18 @@
                                     </textField>
                                 </subviews>
                             </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6p4-f5-WWG" customClass="EZAudioPlot">
+                                <frame key="frameInset" minX="67" minY="56" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.024746400523560252" green="0.024746400523560252" blue="0.024746400523560252" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <connections>
                         <outlet property="FreqTestBox" destination="JUb-Ou-6kD" id="RJo-fe-P98"/>
+                        <outlet property="audioInputPlot" destination="6p4-f5-WWG" id="EVa-aP-3St"/>
                         <outlet property="btnAudioRecord" destination="2ur-hd-7YQ" id="ZTf-GQ-KVl"/>
                         <outlet property="timer1Label" destination="41S-Q7-Myt" id="35F-Ak-YkO"/>
                         <outlet property="timer2Label" destination="QoA-8l-dJe" id="8QY-3j-uEK"/>
