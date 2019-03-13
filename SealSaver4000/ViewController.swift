@@ -24,12 +24,16 @@ class ViewController: UIViewController, AVAudioRecorderDelegate , AVAudioPlayerD
     var audioRecorder    :AVAudioRecorder!
     var settings         = [String : Int]()
     var audioPlayer : AVAudioPlayer!
-
+    
+    var mic: AKMicrophone!
     var recorder: AKNodeRecorder?
     var player: AKAudioPlayer?
     var tape: AKAudioFile?
     var micBooster: AKBooster?
     var moogLadder: AKMoogLadder?
+    var tracker: AKFrequencyTracker!
+    var silence: AKBooster!
+
     
     var state = State.readyToRecord
     
@@ -70,18 +74,17 @@ class ViewController: UIViewController, AVAudioRecorderDelegate , AVAudioPlayerD
     var timer1:Timer = Timer()
     @IBOutlet weak var timer1Label: UILabel!
     @IBOutlet weak var timer2Label: UILabel!
-    
-    /*
+
     //Code to set up the plot
     func setupPlot() {
         let plot = AKNodeOutputPlot(mic, frame: audioInputPlot.bounds)
-        plot.plotType = .Rolling
+        plot.plotType = .rolling
         plot.shouldFill = true
         plot.shouldMirror = true
-        plot.color = UIColor.blueColor()
+        plot.backgroundColor = UIColor.black
+        plot.color = UIColor.red
         audioInputPlot.addSubview(plot)
     }
-    */
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -100,9 +103,12 @@ class ViewController: UIViewController, AVAudioRecorderDelegate , AVAudioPlayerD
         } catch { print("Errored setting category.") }
         
         // Patching
-        let mic = AKMicrophone()
+         AKSettings.audioInputEnabled = true
+        mic = AKMicrophone()
         let micMixer = AKMixer(mic)
         micBooster = AKBooster(micMixer)
+        tracker = AKFrequencyTracker(mic)
+        silence = AKBooster(tracker, gain: 0)
         
         // Will set the level of microphone monitoring
         micBooster!.gain = 0
@@ -122,54 +128,16 @@ class ViewController: UIViewController, AVAudioRecorderDelegate , AVAudioPlayerD
         
        // setupUIForRecording()
     }
-/*
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        AudioKit.output = silence
-        do {
-            try AudioKit.start()
-        } catch {
-            AKLog("AudioKit did not start!")
-        }
+        //Start the AudioKit for Recording
+       // AudioKit.output = silence
+//        AudioKit.start()
         setupPlot()
-        Timer.scheduledTimer(timeInterval: 0.1,
-                             target: self,
-                             selector: #selector(ViewController.updateUI),
-                             userInfo: nil,
-                             repeats: true)
     }
-    
-    @objc func updateUI() {
-        if tracker.amplitude > 0.1 {
-            frequencyLabel.text = String(format: "%0.1f", tracker.frequency)
-            
-            var frequency = Float(tracker.frequency)
-            while frequency > Float(noteFrequencies[noteFrequencies.count - 1]) {
-                frequency /= 2.0
-            }
-            while frequency < Float(noteFrequencies[0]) {
-                frequency *= 2.0
-            }
-            
-            var minDistance: Float = 10_000.0
-            var index = 0
-            
-            for i in 0..<noteFrequencies.count {
-                let distance = fabsf(Float(noteFrequencies[i]) - frequency)
-                if distance < minDistance {
-                    index = i
-                    minDistance = distance
-                }
-            }
-            let octave = Int(log2f(Float(tracker.frequency) / frequency))
-            noteNameWithSharpsLabel.text = "\(noteNamesWithSharps[index])\(octave)"
-            noteNameWithFlatsLabel.text = "\(noteNamesWithFlats[index])\(octave)"
-        }
-        amplitudeLabel.text = String(format: "%0.2f", tracker.amplitude)
-    }
-    */
-    func playingEnded() {
+     func playingEnded() {
         DispatchQueue.main.async {
         }
     }
