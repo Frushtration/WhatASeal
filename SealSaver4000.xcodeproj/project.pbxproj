@@ -16,6 +16,7 @@
 		87997221223053BC00057EF9 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 87997220223053BC00057EF9 /* Podfile */; };
 		8799722322306F0500057EF9 /* AudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8799722222306F0500057EF9 /* AudioKit.framework */; };
 		8799722422306F0500057EF9 /* AudioKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8799722222306F0500057EF9 /* AudioKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		87EDDECF224DF3FD0061D628 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EDDECE224DF3FD0061D628 /* CircleView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -44,6 +45,7 @@
 		870BF24821F3C722007AC0D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		87997220223053BC00057EF9 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		8799722222306F0500057EF9 /* AudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AudioKit.framework; sourceTree = "<group>"; };
+		87EDDECE224DF3FD0061D628 /* CircleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
 		B91040BF51ECFAD88FB4D96D /* Pods-SealSaver4000.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SealSaver4000.release.xcconfig"; path = "Target Support Files/Pods-SealSaver4000/Pods-SealSaver4000.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -97,6 +99,7 @@
 				870BF24321F3C722007AC0D1 /* Assets.xcassets */,
 				870BF24521F3C722007AC0D1 /* LaunchScreen.storyboard */,
 				870BF24821F3C722007AC0D1 /* Info.plist */,
+				87EDDECE224DF3FD0061D628 /* CircleView.swift */,
 			);
 			path = SealSaver4000;
 			sourceTree = "<group>";
@@ -227,6 +230,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87EDDECF224DF3FD0061D628 /* CircleView.swift in Sources */,
 				870BF23F21F3C722007AC0D1 /* ViewController.swift in Sources */,
 				870BF23D21F3C722007AC0D1 /* AppDelegate.swift in Sources */,
 			);

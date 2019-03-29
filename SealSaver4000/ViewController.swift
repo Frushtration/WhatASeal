@@ -12,11 +12,10 @@ import CoreAudioKit
 import Foundation
 import AVKit
 import AudioKit
+//import CoreLocation
 
 
 class ViewController: UIViewController, AVAudioRecorderDelegate , AVAudioPlayerDelegate, UITextFieldDelegate{
-    
-
     
     //Settings for all the audio input
     @IBOutlet weak var btnAudioRecord: UIButton!
@@ -30,26 +29,20 @@ class ViewController: UIViewController, AVAudioRecorderDelegate , AVAudioPlayerD
     var player: AKAudioPlayer?
     var tape: AKAudioFile?
     var micBooster: AKBooster?
-    var moogLadder: AKMoogLadder?
+    var freqFilter: AKMoogLadder?
     var tracker: AKFrequencyTracker!
     var silence: AKBooster!
 
+    
+    //Set up circle animation
+    var circle = CircleView()
     
     var state = State.readyToRecord
     
     @IBOutlet weak var infoLabel: UILabel!
     
     @IBOutlet var audioInputPlot: EZAudioPlot!
-    /*
-    @IBOutlet weak var resetButton: UIButton!
-    @IBOutlet weak var freqLabel: UILabel!
-    @IBOutlet weak var resonLabel: UILabel!
-    @IBOutlet weak var mainButton: UIButton!
-    @IBOutlet weak var loopButton: UIButton!
-    @IBOutlet weak var freqSlider: UISlider!
-    @IBOutlet weak var moogLadderTitle: UILabel!
-    @IBOutlet weak var resonSlider: UISlider!
-    */
+    @IBOutlet weak var gainSlider: UISlider!
     
     enum State {
         case readyToRecord
@@ -57,23 +50,18 @@ class ViewController: UIViewController, AVAudioRecorderDelegate , AVAudioPlayerD
         //case readyToPlay
         //case playing
     }
-
     
-       //Set up the keypad for the frequency
+    //Set up the keypad for the frequency
     @IBOutlet weak var FreqTestBox: UITextField!
     //Set the var for the freq
     var frequecy = 0
-    
-    /*
-    //Set up the button to show the current freq
-    @IBOutlet weak var frequency: UILabel!
-     */
-    
+
     //Set up for the timers
     var startTime = TimeInterval()
     var timer1:Timer = Timer()
     @IBOutlet weak var timer1Label: UILabel!
     @IBOutlet weak var timer2Label: UILabel!
+   // var finalTimer1:String
 
     //Code to set up the plot
     func setupPlot() {
@@ -83,9 +71,9 @@ class ViewController: UIViewController, AVAudioRecorderDelegate , AVAudioPlayerD
         plot.shouldMirror = true
         plot.backgroundColor = UIColor.black
         plot.color = UIColor.red
+        plot.shouldFill = true;
         audioInputPlot.addSubview(plot)
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         FreqTestBox.keyboardType = UIKeyboardType.numberPad
@@ -106,6 +94,8 @@ class ViewController: UIViewController, AVAudioRecorderDelegate , AVAudioPlayerD
          AKSettings.audioInputEnabled = true
         mic = AKMicrophone()
         let micMixer = AKMixer(mic)
+        freqFilter = AKMoogLadder(mic)
+
         micBooster = AKBooster(micMixer)
         tracker = AKFrequencyTracker(mic)
         silence = AKBooster(tracker, gain: 0)
@@ -118,24 +108,38 @@ class ViewController: UIViewController, AVAudioRecorderDelegate , AVAudioPlayerD
         player?.looping = false
         player?.completionHandler = playingEnded
         
-        moogLadder = AKMoogLadder(player!)
+        //let mainMixer = AKMixer(freqFilter!, micBooster!)
         
-   
-        let mainMixer = AKMixer(moogLadder!, micBooster!)
-        
-        AudioKit.output = mainMixer
+        AudioKit.output = silence
         AudioKit.start()
         
-       // setupUIForRecording()
+        circle = CircleView(frame: CGRect(x: 40, y: 50, width: 40, height: 60))
+        circle.backgroundColor = UIColor.clear
+        view.addSubview(circle)
+        
+        Timer.scheduledTimer(timeInterval: 0.1,
+                             target: self,
+                             selector: #selector(ViewController.checkPing),
+                             userInfo: nil,
+                             repeats: true)
+    }
+    
+    func updateFrequency(value: Double){
+        freqFilter?.cutoffFrequency = value
+    }
+    
+    @objc func checkPing(){
+        if(tracker.amplitude > 0.1){
+            let multiplier = tracker.amplitude * 100
+            circle.resizeCircleWithPulseAinmation(CGFloat(multiplier), duration: 0.5)
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        //Start the AudioKit for Recording
-       // AudioKit.output = silence
-//        AudioKit.start()
         setupPlot()
+
+       // setUpCircle()
     }
      func playingEnded() {
         DispatchQueue.main.async {
@@ -155,11 +159,12 @@ class ViewController: UIViewController, AVAudioRecorderDelegate , AVAudioPlayerD
         } else {
             //you need to save the time after this
             //also leave the timer label on until a new timer is created
+            //finalTimer1 =  timer1Label.text!
             timer1.invalidate()
- 
         }
     }
-    func updateTime() {
+    
+    func updateTime(/*startTime:TimeInterval, timerLabel: UILabel*/) {
         let currentTime = Date.timeIntervalSinceReferenceDate
         
         //Find the difference between current time and start time.
@@ -230,6 +235,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate , AVAudioPlayerD
         }
 
     }
+ 
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         print(flag)
     }
@@ -248,6 +254,8 @@ class ViewController: UIViewController, AVAudioRecorderDelegate , AVAudioPlayerD
     func processInputOnDone() {
         if let text = FreqTestBox.text, !text.isEmpty {
             frequecy = Int(FreqTestBox.text!)!
+            //Update the controls to adjust for the frequencyx
+            updateFrequency(value: Double(frequecy))
         }
         print(frequecy)
     }

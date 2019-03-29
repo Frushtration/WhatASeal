@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nai-ee-HqK">
-                                <frame key="frameInset" minX="32" minY="373" width="309" height="128"/>
+                                <frame key="frameInset" minY="452" width="309" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="00:00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="41S-Q7-Myt">
@@ -70,7 +70,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2ur-hd-7YQ">
-                                <frame key="frameInset" minX="148" minY="237" width="65" height="40"/>
+                                <frame key="frameInset" minX="148" minY="334" width="65" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.023121364869568173" green="0.070151147678145009" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Rec">
@@ -85,7 +85,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="JUb-Ou-6kD">
-                                        <frame key="frameInset" minX="57" minY="46" width="97" height="30"/>
+                                        <frame key="frameInset" minX="19" minY="46" width="149" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -97,7 +97,7 @@
                                 </subviews>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6p4-f5-WWG" customClass="EZAudioPlot">
-                                <frame key="frameInset" minX="67" minY="56" width="240" height="128"/>
+                                <frame key="frameInset" minX="26" minY="200" width="172" height="106"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <userDefinedRuntimeAttributes>
@@ -106,6 +106,13 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <slider contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="3PN-3X-Mwl">
+                                <frame key="frameInset" minX="43" minY="394" width="118" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="minimumTrackTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="maximumTrackTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="thumbTintColor" red="0.0" green="1" blue="0.075668181779999996" alpha="1" colorSpace="calibratedRGB"/>
+                            </slider>
                         </subviews>
                         <color key="backgroundColor" red="0.024746400523560252" green="0.024746400523560252" blue="0.024746400523560252" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -114,6 +121,7 @@
                         <outlet property="FreqTestBox" destination="JUb-Ou-6kD" id="RJo-fe-P98"/>
                         <outlet property="audioInputPlot" destination="6p4-f5-WWG" id="EVa-aP-3St"/>
                         <outlet property="btnAudioRecord" destination="2ur-hd-7YQ" id="ZTf-GQ-KVl"/>
+                        <outlet property="gainSlider" destination="3PN-3X-Mwl" id="Zfb-8V-tbD"/>
                         <outlet property="timer1Label" destination="41S-Q7-Myt" id="35F-Ak-YkO"/>
                         <outlet property="timer2Label" destination="QoA-8l-dJe" id="8QY-3j-uEK"/>
                     </connections>
